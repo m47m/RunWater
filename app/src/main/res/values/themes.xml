@@ -2,4 +2,17 @@
 <resources>
 
     <style name="Theme.RunWater" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="AppTheme" parent="android:Theme.Wallpaper">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+    </style>
+
+    <style name="SAOTheme" parent="android:Theme.Wallpaper">
+        <!-- windowNoTitle设置为true，去掉标题栏 -->
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+
+
 </resources>

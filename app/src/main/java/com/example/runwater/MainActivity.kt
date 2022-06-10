@@ -8,19 +8,20 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.*
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowCompat
 import coil.compose.AsyncImage
 import com.example.runwater.ui.theme.RunWaterTheme
-
 
 
 class MainActivity : ComponentActivity() {
@@ -29,10 +30,16 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initData()
+        //WindowCompat.setDecorFitsSystemWindows(window, false)
+//        val systemUiController = rememberSystemUiController()
+//        val useDarkIcons = MaterialTheme.colors.isLight
+
         setContent {
+
             RunWaterTheme {
                 // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+                Surface(modifier = Modifier.fillMaxSize(), color = Color.Transparent) {
+
                     AppList(arrayApp)
                 }
             }
@@ -64,6 +71,8 @@ class MainActivity : ComponentActivity() {
         }
         return packageManager.queryIntentActivities(intent,0)
     }
+
+
 
 }
 
@@ -109,20 +118,20 @@ fun TextButtonDemo(appInfoBean: AppInfoBean) {
 
 
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    RunWaterTheme {
-        // A surface container using the 'background' color from the theme
-        Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-            // Greeting("Android")
-            TextButton(onClick = {
-            }) {
-                Text("Text Button")
-            }
-        }
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun DefaultPreview() {
+//    RunWaterTheme {
+//        // A surface container using the 'background' color from the theme
+//        Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+//            // Greeting("Android")
+//            TextButton(onClick = {
+//            }) {
+//                Text("Text Button")
+//            }
+//        }
+//    }
+//}
 
 class AppInfoBean {
     var intent: Intent? = null
