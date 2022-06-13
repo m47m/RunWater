@@ -37,11 +37,12 @@ class MainActivity : ComponentActivity() {
         setContent {
 
             RunWaterTheme {
+                AppList(arrayApp)
                 // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = Color.Transparent) {
-
-                    AppList(arrayApp)
-                }
+//                Surface(modifier = Modifier.fillMaxSize(), color = Color.Transparent) {
+//
+//                    AppList(arrayApp)
+//                }
             }
         }
     }
@@ -53,7 +54,7 @@ class MainActivity : ComponentActivity() {
         Log.d("testMain num of apps",apps.size.toString())
         for (i in apps){
             Log.d("testMain",i.loadLabel(pm).toString())
-            if (BuildConfig.APPLICATION_ID == i.activityInfo.packageName) continue  //过滤掉 自己本身
+          //  if (BuildConfig.APPLICATION_ID == i.activityInfo.packageName) continue  //过滤掉 自己本身
             val appinfo = AppInfoBean()
             appinfo.activityName = i.activityInfo.name // 获得该应用程序的启动Activity的name
             appinfo.packageName = i.activityInfo.packageName // 获得应用程序的包名
@@ -78,34 +79,41 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun AppList(arrayApp: MutableList<AppInfoBean>){
-    LazyColumn(
-        modifier = Modifier.fillMaxHeight() ,
-        verticalArrangement = Arrangement.Bottom , //设置子View控件不足时，布局底部对齐
-    ){
-        items(arrayApp.size) { index ->
-            val info = arrayApp[index]
-            // 列表单项的UI
-            TextButtonDemo(info)
+    Row(
+        Modifier.fillMaxWidth(),
+        //horizontalArrangement = Arrangement.Center,//设置水平居中对齐
+        //verticalAlignment =  Alignment.CenterVertically//设置垂直居中对
+    ) {
+        LazyColumn(
+            Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ){
+            items(arrayApp.size) { index ->
+                val info = arrayApp[index]
+                // 列表单项的UI
+                TextButtonDemo(info)
+            }
         }
     }
+
+
 }
 
 @Composable
 fun TextButtonDemo(appInfoBean: AppInfoBean) {
     val context = LocalContext.current
-//    Image(
-//        painter = rememberAsyncImagePainter(model = appInfoBean.icon),
+
+//    AsyncImage(
+//        model = appInfoBean.icon,
 //        contentDescription = null
 //    )
-    AsyncImage(
-        model = appInfoBean.icon,
-        contentDescription = null
-    )
 
     TextButton(onClick = {
         context.startActivity(appInfoBean.intent);
     }) {
-        Text(appInfoBean.appLabel.toString())
+        Text(
+            appInfoBean.appLabel.toString(),
+            color = Color.White)
         Box(
             modifier = Modifier
                 .size(10.dp)
@@ -118,20 +126,6 @@ fun TextButtonDemo(appInfoBean: AppInfoBean) {
 
 
 
-//@Preview(showBackground = true)
-//@Composable
-//fun DefaultPreview() {
-//    RunWaterTheme {
-//        // A surface container using the 'background' color from the theme
-//        Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-//            // Greeting("Android")
-//            TextButton(onClick = {
-//            }) {
-//                Text("Text Button")
-//            }
-//        }
-//    }
-//}
 
 class AppInfoBean {
     var intent: Intent? = null
